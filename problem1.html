@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Problem 1</title>
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #f5f5f5; padding: 30px; }
+    .container { max-width: 700px; margin: auto; background: white; padding: 20px 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    h1 { text-align: center; color: #333; }
+    pre { background: #272822; color: #f8f8f2; padding: 15px; border-radius: 8px; overflow-x: auto; }
+    code { font-family: Consolas, monospace; font-size: 15px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Problem 1: C++ Code</h1>
+    <pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+void funcName1(int &value) {
+    cout &lt;&lt; "Enter a number: ";
+    cin &gt;&gt; value;
+}
+
+void funcName2(int limit, int &result) {
+    result = 0;
+    for (int i = 1; i &lt;= limit; i++) {
+        if (i % 2 != 0) {
+            result += i;
+        }
+    }
+}
+
+void funcName3(int limit, int result) {
+    cout &lt;&lt; result &lt;&lt; endl;
+}
+
+int main() {
+    int inputValue, finalResult;
+    funcName1(inputValue);
+    funcName2(inputValue, finalResult);
+    funcName3(inputValue, finalResult);
+
+    return 0;
+}
+</code></pre>
+  </div>
+</body>
+</html>

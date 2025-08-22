@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Programming Problems with QR Codes</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .problem {
+      background: white;
+      border: 1px solid #ccc;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .qr {
+      margin-left: 20px;
+    }
+    button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+    .problem p {
+      margin: 0;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Programming Problems</h1>
+  <div id="problems-container"></div>
+  <button id="download-pdf">Download as PDF</button>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <script>
+    const problems = [
+      { 
+        title: "Problem 1", 
+        url: "problem1.html"
+      },
+      { 
+        title: "Problem 2", 
+        url: "problem2.html"
+      },
+      { 
+        title: "Problem 3", 
+        url: "problem3.html"
+      },
+      { 
+        title: "Problem 4", 
+        url: "problem4.html"
+      }
+    ];
+
+    const container = document.getElementById("problems-container");
+
+    problems.forEach((p, index) => {
+      const div = document.createElement("div");
+      div.className = "problem";
+
+      const pText = document.createElement("p");
+      pText.textContent = p.title;
+      div.appendChild(pText);
+
+      const qrDiv = document.createElement("div");
+      qrDiv.id = `qrcode${index+1}`;
+      qrDiv.className = "qr";
+      div.appendChild(qrDiv);
+
+      container.appendChild(div);
+
+      new QRCode(qrDiv, {
+        text: p.url,
+        width: 100,
+        height: 100
+      });
+    });
+
+    document.getElementById("download-pdf").addEventListener("click", async () => {
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF();
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+      let yOffset = 20;
+
+      for (let i = 0; i < problems.length; i++) {
+        const problemDiv = document.getElementById(`qrcode${i+1}`).parentNode;
+        const canvas = await html2canvas(problemDiv);
+        const imgData = canvas.toDataURL("image/png");
+
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = pageWidth - 30;
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+        if (yOffset + pdfHeight > pageHeight - 20) {
+          pdf.addPage();
+          yOffset = 20;
+        }
+
+        pdf.addImage(imgData, 'PNG', 15, yOffset, pdfWidth, pdfHeight);
+        yOffset += pdfHeight + 15;
+      }
+
+      pdf.save("programming_problems.pdf");
+    });
+  </script>
+</body>
+</html>

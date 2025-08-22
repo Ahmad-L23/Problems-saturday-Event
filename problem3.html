@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Problem 3</title>
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #f5f5f5; padding: 30px; }
+    .container { max-width: 700px; margin: auto; background: white; padding: 20px 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    h1 { text-align: center; color: #333; }
+    pre { background: #272822; color: #f8f8f2; padding: 15px; border-radius: 8px; overflow-x: auto; }
+    code { font-family: Consolas, monospace; font-size: 15px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Problem 3: C++ Code</h1>
+    <pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+string func1() {
+    string w;
+    cin &gt;&gt; w;
+    return w;
+}
+
+string func2(string w) {
+    if (w.size() &gt; 10) {
+        int middleCount = w.size() - 2;
+        return w[0] + to_string(middleCount) + w[w.size() - 1];
+    } else
+        return w;
+}
+
+void func3(string w) {
+    cout &lt;&lt; w &lt;&lt; endl;
+}
+
+int main() {
+    string word = func1();
+    string processed = func2(word);
+    func3(processed);
+
+    return 0;
+}
+</code></pre>
+  </div>
+</body>
+</html>
